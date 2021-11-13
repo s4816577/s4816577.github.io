@@ -20,19 +20,26 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content=".red {   color: #DC3724; }   PPP222">
+  <meta name="description" content=".red {   color: #DC3724; }   Introduction &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This thesis mainly develops a supervised absolute  camera pose learning framework, in particular scenes,  takes a single RGB image as">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PoseAttention">
 <meta property="og:url" content="http://example.com/PoseAttention/index.html">
 <meta property="og:site_name" content="Albert&#39;s Resume">
-<meta property="og:description" content=".red {   color: #DC3724; }   PPP222">
+<meta property="og:description" content=".red {   color: #DC3724; }   Introduction &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This thesis mainly develops a supervised absolute  camera pose learning framework, in particular scenes,  takes a single RGB image as">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://media.giphy.com/media/BzyTuYCmvSORqs1ABM/giphy.gif">
-<meta property="og:image" content="https://media.giphy.com/media/jpbnoe3UIa8TU8LM13/giphy.gif">
+<meta property="og:image" content="https://i.imgur.com/g6Qqb2n.png">
+<meta property="og:image" content="https://i.imgur.com/w4PsABz.png">
+<meta property="og:image" content="https://i.imgur.com/u92wBH0.png">
+<meta property="og:image" content="https://i.imgur.com/47IFKRL.png">
+<meta property="og:image" content="https://i.imgur.com/hnlzgRl.png">
+<meta property="og:image" content="https://i.imgur.com/d9Dv3HY.png">
+<meta property="og:image" content="https://i.imgur.com/ZbIKV4G.png">
+<meta property="og:image" content="https://i.imgur.com/WYl0tjt.png">
+<meta property="og:image" content="https://i.imgur.com/hnlzgRl.png">
 <meta property="article:published_time" content="2021-02-03T06:14:25.000Z">
 <meta property="article:author" content="Albert Li">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://media.giphy.com/media/BzyTuYCmvSORqs1ABM/giphy.gif">
+<meta name="twitter:image" content="https://i.imgur.com/g6Qqb2n.png">
 
 <link rel="canonical" href="http://example.com/PoseAttention/">
 
@@ -192,14 +199,65 @@
 }
 </style>
 
-<h2 id="PPP222"><a href="#PPP222" class="headerlink" title="PPP222"></a><span class="red">PPP222</span></h2><p align="center">
-  <img src="https://media.giphy.com/media/BzyTuYCmvSORqs1ABM/giphy.gif" width='500px' height='500px'/>
-</p>
-
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a><span class="red">Introduction</span></h2><font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;This thesis mainly develops a <b>supervised absolute 
+camera pose learning framework</b>, in particular scenes, 
+takes a single RGB image as input and output the 
+predicted camera pose of the image. The whole <b>system is 
+end-to-end with no need of additional mathematical 
+optimization</b> to maintain the fest speed characteristic. 
+Our system architecture is mainly based on <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1611.07890.pdf">PoseLSTM</a> by <b>incorporating a feature-weighted mechanism</b> to 
+improve the unfair proportion between original features 
+to predict a better position and rotation. In the loss function, 
+we use the <b>learn weight loss function</b> which is 
+proposed by <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1704.00390.pdf">Kendall, et al.</a> to save a lot of time and labor costs, and at the same time increase the accuracy of the loss function 
+in describing the scale ratio.
+</font>
+<br>
+<font size=4> ● Input Single Image and Output Camera Pose </font>
 <p align="center">
-  <img src="https://media.giphy.com/media/jpbnoe3UIa8TU8LM13/giphy.gif" width='50px' height='50px'/>
+  <img src="https://i.imgur.com/g6Qqb2n.png" width='545px' height='205px'/>
 </p>
 
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a><span class="red">Methodology</span></h2><p><font size=4> ● Architecture of PoseAttention </font></p>
+<p align="center">
+  <img src="https://i.imgur.com/w4PsABz.png" width='648px' height='144px'/>
+</p>
+<font size=4> ● Edited PoseLSTM </font>
+<p align="center">
+  <img src="https://i.imgur.com/u92wBH0.png" width='604x' height='216px'/>
+</p>
+<font size=4> ● Feature-weighted Mechanism </font>
+<p align="center">
+  <img src="https://i.imgur.com/47IFKRL.png" width='700px' height='220px'/>
+</p>
+<font size=4> ● Learn Weight Loss Function </font>
+<p align="center">
+  <img src="https://i.imgur.com/hnlzgRl.png" width='740px' height='77px'/>
+</p>
+
+<h2 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a><span class="red">Datasets</span></h2><p><font size=4> ● Outdoor Dataset - Cambridge Landmarks </font></p>
+<p align="center">
+  <img src="https://i.imgur.com/d9Dv3HY.png" width='653px' height='103px'/>
+</p>
+<font size=4> ● Indoor Dataset - Seven Scenes </font>
+<p align="center">
+  <img src="https://i.imgur.com/ZbIKV4G.png" width='670px' height='90px'/>
+</p>
+
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a><span class="red">Experiments</span></h2><p><font size=4> ● Median Error of Cambridge Landmarks </font></p>
+<p align="center">
+  <img src="https://i.imgur.com/WYl0tjt.png" width='1000px' height='200px'/>
+</p>
+<font size=4> ● Learn Weight Loss Function </font>
+<p align="center">
+  <img src="https://i.imgur.com/hnlzgRl.png" width='740px' height='77px'/>
+</p>
+
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a><span class="red">Conclusions</span></h2><h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><span class="red">Demo</span></h2><p><font size=4> ● Trajectory Visualization of PoseLSTM in St Marys Church </font></p>
+<iframe src='https://gfycat.com/ifr/WellwornAnguishedEsok' frameborder='0' scrolling='no' allowfullscreen width='640' height='323'></iframe>
+<font size=4> ● Trajectory Visualization of PoseAttention in St Marys Church </font>
+<iframe src='https://gfycat.com/ifr/MessySardonicKudu' frameborder='0' scrolling='no' allowfullscreen width='640' height='323'></iframe>
 
       </div>
       
@@ -261,7 +319,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPP222"><span class="nav-number">1.</span> <span class="nav-text">PPP222</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number">2.</span> <span class="nav-text">Methodology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Datasets"><span class="nav-number">3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiments"><span class="nav-number">4.</span> <span class="nav-text">Experiments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusions"><span class="nav-number">5.</span> <span class="nav-text">Conclusions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">6.</span> <span class="nav-text">Demo</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
