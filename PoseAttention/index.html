@@ -296,16 +296,57 @@ limited numbers.
   <img src="https://i.imgur.com/hnlzgRl.png" width='740px' height='77px'/>
 </p>
 
-<h2 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a><span class="red">Datasets</span></h2><p><font size=4> ● Outdoor Dataset - Cambridge Landmarks </font></p>
+<h2 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a><span class="red">Datasets</span></h2><font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+The outdoor dataset is Cambridge Landmarks, which is 
+mainly an outdoor street view near Cambridge University. 
+It is a large-scale RGB dataset, provided by <a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Kendall_PoseNet_A_Convolutional_ICCV_2015_paper.pdf">PoseNet</a> in ICCV 2015, covers an area of 50000 square 
+meters, and <b>contains four scenes, Kings College, Old 
+Hospital, Shop Façade and St Mary’s Church</b>. The RGB 
+images are recorded by the mobile phone camera, 
+including about 8000 images for training and 5000 
+images for testing, and the <b>ground truth of these images 
+are obtained by <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Structure_from_motion">structure-from-motion</a></b>.
+</font>
+<br>
+<font size=4> ● Outdoor Dataset - Cambridge Landmarks </font>
 <p align="center">
   <img src="https://i.imgur.com/d9Dv3HY.png" width='783px' height='120px'/>
 </p>
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+The indoor dataset is Seven Scenes, which is mainly the scenes 
+of indoor office, provided by Microsoft in 2013. It is a 
+small-scale RGB-D dataset, covers an area of 12 square 
+meters, and <b>contains seven scenes, chess, fire, heads, 
+office, pumpkin, red kitchen, stairs</b>. The RGB-D images 
+are recorded by handheld Kinect RGB-D camera, 
+including 26000 images for training and 17000 images 
+for testing, and the <b>ground truth are obtained by <a herf="https://dl.acm.org/doi/pdf/10.1145/2047196.2047270?casa_token=jzvqHBIRADQAAAAA:kJSJRxO4XWANUN_KQQ1fGYqZ3ZVu4uHvrV7s9T6H3k5h-yV0FJcNL84rQ9wo2FPkCd3HXjNDmFy_gEY">Kinect 
+Fusion system</a></b>. Although this is an RGB-D dataset, 
+we only use the RGB data for experiments, without using 
+depth.
+</font>
+<br>
 <font size=4> ● Indoor Dataset - Seven Scenes </font>
 <p align="center">
   <img src="https://i.imgur.com/ZbIKV4G.png" width='804px' height='108px'/>
 </p>
 
-<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a><span class="red">Experiments</span></h2><p><font size=4> ● Median Error of Cambridge Landmarks </font></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a><span class="red">Experiments</span></h2><font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+The data we presented are mainly 
+the median error of PoseNet, PoseLSTM and our system, 
+where the <b>data in the parentheses in last two columns is 
+the percentage of progress relative to the results of 
+PoseNet</b>. It can be clearly seen from the table that <b>our 
+median error is much smaller than PoseNet and 
+PoseLSTM</b>, outperforms PoseNet about 46% on position 
+and 44% on rotation, and also outperforms PoseLSTM 
+about 14% on position and 31% on rotation.
+</font>
+<br>
+<font size=4> ● Median Error of Cambridge Landmarks </font>
 <p align="center">
   <img src="https://i.imgur.com/WYl0tjt.png" width='1000px' height='226px'/>
 </p>
@@ -314,7 +355,22 @@ limited numbers.
   <img src="https://i.imgur.com/s30O0SR.png" width='1000px' height='300px'/>
 </p>
 
-<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a><span class="red">Conclusions</span></h2><h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><span class="red">Demo</span></h2><p><font size=4> ● Trajectory Visualization of St Marys Church </font></p>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a><span class="red">Conclusions</span></h2><font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+Our first contribution is <b>showing that feature weighted mechanism in LSTM is a viable method</b> on 
+localization. Second contribution is <b>outperforming 
+PoseNet and PoseLSTM on localization accuracy</b>. We 
+outperform PoseNet about 46% on position and 44% on 
+rotation in outdoor scenes, and outperform 51% on 
+position and 28% on rotation in indoor scenes. Also, we 
+outperform PoseLSTM about 17% on position and 27% 
+on rotation in outdoor scenes, and outperform 43% on 
+position and 22% on rotation in indoor scenes. Third 
+contribution is that we <b>maintain the characteristic of real time running</b>, which reaches 90 fps in our experiments, 
+and it only needs the fixed memory when operating.
+</font>
+
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><span class="red">Demo</span></h2><p><font size=4> ● Trajectory Visualization of St Marys Church </font></p>
 <iframe src='https://gfycat.com/ifr/FastFrigidAbalone' frameborder='0' scrolling='no' allowfullscreen width='960' height='361'></iframe>
 
       </div>
