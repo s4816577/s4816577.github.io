@@ -28,6 +28,8 @@
 <meta property="og:description" content=".red {   color: #DC3724; }   Introduction &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This thesis mainly develops a supervised absolute  camera pose learning framework, in particular scenes,  takes a single RGB image as">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/g6Qqb2n.png">
+<meta property="og:image" content="https://i.imgur.com/QFnRGZH.png">
+<meta property="og:image" content="https://i.imgur.com/qN94zMP.png">
 <meta property="og:image" content="https://i.imgur.com/w4PsABz.png">
 <meta property="og:image" content="https://i.imgur.com/u92wBH0.png">
 <meta property="og:image" content="https://i.imgur.com/47IFKRL.png">
@@ -137,16 +139,6 @@
     <a href="/TaiChiAR/" rel="section"><i class="fas fa-running fa-fw"></i>TaiChiAR</a>
 
   </li>
-        <li class="menu-item menu-item-safety">
-
-    <a href="/Safety/" rel="section"><i class="fas fa-hard-hat fa-fw"></i>Safety</a>
-
-  </li>
-        <li class="menu-item menu-item-lpr">
-
-    <a href="/LPR/" rel="section"><i class="fas fa-car fa-fw"></i>LPR</a>
-
-  </li>
   </ul>
 </nav>
 
@@ -205,7 +197,7 @@ camera pose learning framework</b>, in particular scenes,
 takes a single RGB image as input and output the 
 predicted camera pose of the image. The whole <b>system is 
 end-to-end with no need of additional mathematical 
-optimization</b> to maintain the fest speed characteristic. 
+optimization</b> to maintain the fast speed characteristic. 
 Our system architecture is mainly based on <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1611.07890.pdf">PoseLSTM</a> by <b>incorporating a feature-weighted mechanism</b> to 
 improve the unfair proportion between original features 
 to predict a better position and rotation. In the loss function, 
@@ -219,18 +211,86 @@ in describing the scale ratio.
   <img src="https://i.imgur.com/g6Qqb2n.png" width='545px' height='205px'/>
 </p>
 
-<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a><span class="red">Methodology</span></h2><p><font size=4> ● Architecture of PoseAttention </font></p>
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a><span class="red">Methodology</span></h2><font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;The LSTM is designed to learn the temporal information, which makes <b>the proportion of the feature vector be positively related to whether its position is close to the output position</b>.
+It is reasonable on time-related sequence. But the issue PoseLSTM dealing with is not. The vectors have no time-related relationships.
+</font>
+<br>
+<font size=4> ● Unfair Proportion in LSTM </font>
 <p align="center">
-  <img src="https://i.imgur.com/w4PsABz.png" width='648px' height='144px'/>
+  <img src="https://i.imgur.com/QFnRGZH.png" width='650px' height='360px'/>
 </p>
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;A reasonable solution is to discard the original output, use the outputted feature vectors of LSTM cells at each point of sequence. Calculate the scores of each, then apply inner product to those outputted vectors and scores, and add up all of them as a new outputted hidden vector. In this way, we can <b>give each vector a different degree of importance</b>.
+</font>
+<br>
+<font size=4> ● Give different degree of importance </font>
+<p align="center">
+  <img src="https://i.imgur.com/qN94zMP.png" width='633px' height='324px'/>
+</p>
+
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+We divide the entire architecture into two big blocks for analysis: <b>edited PoseLSTM</b> and <b>feature-weighted mechanism</b>. The query image first passed through the edited PoseLSTM, then generate four kids of outputted feature vectors which come from each LSTM cells in four directions respectively. And these four kinds of feature 
+vectors keep feed-forwarding through our feature weighted mechanism then produce 6DoF camera pose.
+</font>
+<br>
+<font size=4> ● Architecture of PoseAttention </font>
+<p align="center">
+  <img src="https://i.imgur.com/w4PsABz.png" width='777px' height='172px'/>
+</p>
+
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+When passing edited PoseLSTM, image needs to go through GoogLeNet first, 
+and generates a 2048 high-dimensional feature 
+vector, y, describing the input image. Next, we resizes the 
+2048 dimensional feature vector to a 2D feature map, Y, 
+with the size of 32*64 and takes this 2D feature map as 
+the input of four LSTMs according to four directions 
+which are the up, down, left and right. So far it has done 
+the same as PoseLSTM does. <b>The difference is that we edited the output of these 
+four LSTMs. We discard the hidden state vector of the 
+last sequence point, and conversely record the output of 
+each LSTM cells, y’</b>.
+</font>
+<br>
 <font size=4> ● Edited PoseLSTM </font>
 <p align="center">
-  <img src="https://i.imgur.com/u92wBH0.png" width='604x' height='216px'/>
+  <img src="https://i.imgur.com/u92wBH0.png" width='724x' height='260px'/>
 </p>
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+In this part, <b>feature-weighted mechanism plays the 
+role of predicting, adjusting and fine-tuning the weights 
+of those feature vectors</b>. First, we concatenate the output feature vectors, y’, 
+in the left-right direction and up-down direction 
+respectively, in order to <b>let the concatenated feature 
+vectors, y", have the cognition of bi-directional 
+information</b> to better learn their proportion. Then, feeds 
+the concatenated feature vectors into a fully connected 
+layer which <b>compress the 64 dimensional feature vectors 
+to 1 dimensional proportion scores</b>. Finally, apply inner product to these scores 
+and the original concatenated feature vectors, and add up 
+all feature vectors to generate a weighted feature vector.
+</font>
+<br>
 <font size=4> ● Feature-weighted Mechanism </font>
 <p align="center">
-  <img src="https://i.imgur.com/47IFKRL.png" width='700px' height='220px'/>
+  <img src="https://i.imgur.com/47IFKRL.png" width='840px' height='264px'/>
 </p>
+<font size=3>
+&nbsp;&nbsp;&nbsp;&nbsp;
+We use learn weight loss function which 
+<b>takes Sx and Sq  as parameters to learn the different scales between positions and rotatioins</b>.
+The benefits of this loss function is that the 
+<b>automatically tuning characteristic</b>, which save human 
+tuning cost and also let the precision of the scale ratio to be more accurate. It is because the automatically tuning 
+may achieve the accuracy below decimal point rather 
+than human tuning which may only adjust between 
+limited numbers.
+</font>
+<br>
 <font size=4> ● Learn Weight Loss Function </font>
 <p align="center">
   <img src="https://i.imgur.com/hnlzgRl.png" width='740px' height='77px'/>
@@ -254,10 +314,8 @@ in describing the scale ratio.
   <img src="https://i.imgur.com/s30O0SR.png" width='1000px' height='300px'/>
 </p>
 
-<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a><span class="red">Conclusions</span></h2><h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><span class="red">Demo</span></h2><p><font size=4> ● Trajectory Visualization of PoseLSTM in St Marys Church </font></p>
-<iframe src='https://gfycat.com/ifr/WellwornAnguishedEsok' frameborder='0' scrolling='no' allowfullscreen width='640' height='323'></iframe>
-<font size=4> ● Trajectory Visualization of PoseAttention in St Marys Church </font>
-<iframe src='https://gfycat.com/ifr/MessySardonicKudu' frameborder='0' scrolling='no' allowfullscreen width='640' height='323'></iframe>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a><span class="red">Conclusions</span></h2><h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><span class="red">Demo</span></h2><p><font size=4> ● Trajectory Visualization of St Marys Church </font></p>
+<iframe src='https://gfycat.com/ifr/FastFrigidAbalone' frameborder='0' scrolling='no' allowfullscreen width='960' height='361'></iframe>
 
       </div>
       
